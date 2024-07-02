@@ -1,2 +1,2 @@
-export {validateUser} from "./validate"
-export {createUserIfMissing} from "./service"
+export { validateUser } from "./validate";
+export { createUserIfMissing } from "./service";

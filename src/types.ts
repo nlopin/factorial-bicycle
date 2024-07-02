@@ -1,56 +1,56 @@
 export type User = {
-    name: string,
-    email: string,
-    phone: string
-}
+  name: string;
+  email: string;
+  phone: string;
+};
 
-type FrameType = "FULL_SUSPENSION"| "DIAMOND"| "STEP_THROUGH"
+type FrameType = "FULL_SUSPENSION" | "DIAMOND" | "STEP_THROUGH";
 
-type FrameFinish = "MATTE" | "SHINY"
+type FrameFinish = "MATTE" | "SHINY";
 
-type Wheels = "ROAD" | "MOUNTAIN" | "FAT_BIKE"
+type Wheels = "ROAD" | "MOUNTAIN" | "FAT_BIKE";
 
-type RimColor = "RED" | "BLACK" | "BLUE"
+type RimColor = "RED" | "BLACK" | "BLUE";
 
-type Chain = "SINGLE_SPEED" | "8_SPEED"
+type Chain = "SINGLE_SPEED" | "8_SPEED";
 
 export type SharedOrderFields = {
-    frameType: FrameType,
-    frameFinish: FrameFinish,
-    wheels: Wheels
-    chain: Chain,
-    rimColor: RimColor
-}
+  frameType: FrameType;
+  frameFinish: FrameFinish;
+  wheels: Wheels;
+  chain: Chain;
+  rimColor: RimColor;
+};
 
-export type UnverifiedOrder = SharedOrderFields
+export type UnverifiedOrder = SharedOrderFields;
 
-export type VerifiedOrder = SharedOrderFields
+export type VerifiedOrder = SharedOrderFields;
 
 export type PlacedOrder = SharedOrderFields & {
-    userEmail: User["email"]
-}
+  userEmail: User["email"];
+};
 
 export type PricedOrder = PlacedOrder & {
-    price: PriceDetails
-}
+  price: PriceDetails;
+};
 
 export type PriceDetails = {
-    total: number,
-    lines: Array<[string, number]>
-}
+  total: number;
+  lines: Array<[string, number]>;
+};
 
 export type NewOrder = PricedOrder & {
-    id: number,
-    state: "new",
-    createdAt: Date
-}
+  id: number;
+  state: "new";
+  createdAt: Date;
+};
 
-export type Either<R, E> = R | E
+export type Either<R, E> = R | E;
 
-type Valid = [true]
+type Valid = [true];
 
-type Invalid = [false, string]
+type Invalid = [false, string];
 
-export type ValidationError = string
+export type ValidationError = string;
 
-export type ValidationResult = Invalid | Valid
+export type ValidationResult = Invalid | Valid;

@@ -1,15 +1,15 @@
-import {User} from "../types";
+import { User } from "../types";
 
-export function createUserIfMissing(user:User) {
-    if(!getUser(user.email)) {
-        createUser(user)
-    }
+export function createUserIfMissing(user: User) {
+  if (!getUser(user.email)) {
+    createUser(user);
+  }
 }
 
-function getUser(email: string): User|null {
-    return null
+function getUser(email: string): User | null {
+  return null;
 }
 
 function createUser(User: User) {
-    //
+  //
 }

@@ -1,37 +1,45 @@
-import {UnverifiedOrder, User, Either, ValidationError, NewOrder} from "../types";
-import {validateUser, createUserIfMissing} from "../user";
+import {
+  UnverifiedOrder,
+  User,
+  Either,
+  ValidationError,
+  NewOrder,
+} from "../types";
+import { validateUser, createUserIfMissing } from "../user";
 
-import {validateOrder} from "./validate";
-import {placeOrder} from "./placeOrder";
-import {calculatePrice} from "./priceOrder";
-import {createOrder, notifyUser} from "./service";
+import { validateOrder } from "./validate";
+import { placeOrder } from "./placeOrder";
+import { calculatePrice } from "./priceOrder";
+import { createOrder, notifyUser } from "./service";
 
-export function newOrderWorkflow(order: UnverifiedOrder, user: User): Either<NewOrder, ValidationError[]> {
-    const errors = validate(order, user)
-    if (errors.length > 0) return errors
+export function newOrderWorkflow(
+  order: UnverifiedOrder,
+  user: User,
+): Either<NewOrder, ValidationError[]> {
+  const errors = validate(order, user);
+  if (errors.length > 0) return errors;
 
-    const placedOrder = placeOrder(order, user)
-    const withPrice = calculatePrice(placedOrder)
+  const placedOrder = placeOrder(order, user);
+  const withPrice = calculatePrice(placedOrder);
 
+  createUserIfMissing(user);
+  const created = createOrder(withPrice);
+  notifyUser(created, user); //could be done in a non-blocking way if we use an event bus
 
-    createUserIfMissing(user)
-    const created = createOrder(withPrice)
-    notifyUser(created, user) //could be done in a non-blocking way if we use an event bus
-
-    return created
+  return created;
 }
 
 function validate(order: UnverifiedOrder, user: User): ValidationError[] {
-    const errors = []
-    const [isValidOrder, orderError] = validateOrder(order)
-    if (!isValidOrder) {
-        errors.push(orderError)
-    }
+  const errors = [];
+  const [isValidOrder, orderError] = validateOrder(order);
+  if (!isValidOrder) {
+    errors.push(orderError);
+  }
 
-    const [isValidClient, clientError] = validateUser(user)
-    if (!isValidClient) {
-        errors.push(clientError)
-    }
+  const [isValidClient, clientError] = validateUser(user);
+  if (!isValidClient) {
+    errors.push(clientError);
+  }
 
-    return errors
+  return errors;
 }
