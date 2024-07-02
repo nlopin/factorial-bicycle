@@ -24,6 +24,16 @@ type PlacedOrder = SharedOrderFields & {
     kind: "new"
 }
 
+type PricedOrder = SharedOrderFields & {
+    kind: "priced"
+    price: PriceDetails
+}
+
+type PriceDetails = {
+    total: number,
+    lines: Array<[string, number]>
+}
+
 type Either<R, E> = R | E
 
 type OrderError = string
@@ -70,4 +80,29 @@ function checkAvailability (order: UnverifiedOrder): ValidationResult {
     }
 
     return [true]
+}
+
+
+function caltulatePrice(order: PlacedOrder): PricedOrder {
+    const individualPiecePrices = getPricesPerPiece(order)
+    const extrasPerCombination = getExtrasCombinationPrice(order)
+    const priceLines: PriceDetails["lines"] = [...individualPiecePrices, ...extrasPerCombination]
+
+    return {
+        ...order,
+        kind:"priced",
+        price: {
+            total: priceLines.reduce((total, [, currentPrice]) => total + currentPrice, 0),
+            lines: priceLines
+        }
+    }
+}
+
+// todo polish the return type, must return only one key
+function getPricesPerPiece (placedOrder: PlacedOrder): Array<[keyof SharedOrderFields, number]> {
+    return [["frameFinish", 50], ["frameType",90]]
+}
+
+function getExtrasCombinationPrice(order: PlacedOrder): Array<[string, number]> {
+    return [["SHINY+GLOSS", 50]]
 }
