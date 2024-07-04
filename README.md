@@ -10,7 +10,9 @@ The assumptions made:
 
 ## Data Model
 
+[Data Model in Miro](https://miro.com/app/board/uXjVK2tcVuc=/?share_link_id=448927819943)
 
+![](./data-model.jpg)
 
 ## Website User Journey
 
