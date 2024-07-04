@@ -1,6 +1,6 @@
 # Marcus Bikes
 
-The repo provides a basic implementation of the domain model of the order in a bike shop. It deliberately does not include a storage and API layer to keep things as pure as possible.
+The repo provides a basic implementation of the domain model of the order in a bike shop. It deliberately does not include a storage and API layer to keep things as pure as possible. The customisations and validations are deliberately hardcoded to showcase TypeScript capabilities to spot bugs in the domain logic code. In the real-life application all conditions and customisations will be stored and retrieved from the database as shown in the Data Model diagram.
 
 The implementation of the domain logic is influenced by Domain-Driven Design. In this approach, the domain business logic is the core of the app. This approach is also known as the ImPureIm sandwich, where any side effects, such as interacting with the DB or returning a response to the API, are moved to the edges of the module.
 
